@@ -328,5 +328,11 @@ Consumer message => hello kwic
 
 위 로그를 보면 메시지를 전달하게 될 때 application.yml 에 설정 한 Producer 를 설정하는 것을 볼 수 있다.   
 중요하게 볼 것은 acks = 1 로그이다.   
-Producer가 Kakfa 서버로 메시지를 전달 하기 전 서로 신호를 받았다는 로그이다.     
+Producer가 Kafka 서버로 메세지를 전달하고 그 메시지를 Kafka서버가 잘 받았는지 확인 하는 로그이다.       
 이후 Kafka 서버로 메시지가 전달 되고 Consumer Listener 에서 메시지를 전달 받아 로그로 보여 주는 것을 확인 할 수 있다.
+
++ Producer Acks의 종류
+  + acks = 0 : Producer는 자신이 보낸 메시지에 대해 Kafka 서버로 부터 확인을 기다리지 않는다.
+  + acks = 1 : Producer는 자신이 보낸 메시지에 대해 Kafka 서버 Leader가 메시지를 받았는지 기다린다. Follower들은 확인 하지 않는다. Leader가 확인 응답을 보내고 Follower에게 복제가 되지 전에 Leader가 fail되면 해당 메시지는 손실 될 수 있습니다.
+  + acks = all : Producer는 자신이 보낸 메시지에 대해 Kafka 서버의 Leader와 Follower까지 받았는지 기다립니다. 최소 하나의 복제본까지 처리 된 것을 확인하므로 메시지가 손실 될 확률은 거의 없습니다.
+    
